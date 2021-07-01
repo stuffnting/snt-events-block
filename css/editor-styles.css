@@ -1,0 +1,27 @@
+.event-date-warning {
+  background: #ffdddd;
+  color: #a40000;
+}
+
+.event-date-instruction {
+  background: #ddddff;
+  color: #0000a4;
+}
+
+.dashicons {
+  vertical-align: text-bottom;
+}
+
+.event-details-wrapper p {
+  margin: 0;
+}
+
+.event-details-wrapper
+  .block-editor-default-block-appender
+  textarea.block-editor-default-block-appender__content {
+  margin: 0;
+}
+
+.snt-events-event-settings select {
+  line-height: 20px !important;
+}
