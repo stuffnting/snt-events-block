@@ -1,10 +1,22 @@
 <?php
 
+/**
+ * This is the callback function used by the snt-events block, which is a dynamic block.
+ * 
+ * The call back is used by register_block_type() in ../plugin.php
+ * 
+ * @param $attribute not used
+ * @param $inner_blocks The inner-blocks saved in the JS file `save` function
+ * 
+ * @return string $final_out The final HTML
+ */
+
 function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
   global $post;
   //Get a flattened array
   $meta = get_post_meta( get_the_ID() );
 
+  // Constants defined in ../plugin.php
   $date_string = $meta[SNT_META_DATES][0] ?? '';
   $time_string = $meta[SNT_META_TIMES][0] ?? '';
   $ignore_time = $meta[SNT_META_IGNORE][0] ?? false;
@@ -19,6 +31,9 @@ function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
     return $date_string ? "<p class='excerpt-event-details'>Date: $date_string</p>" : '' ;
   }
 
+  // If this is a single post get the other event details
+
+  // maybe_unserialize() - WordPress function, unserialize data only if it was serialized.
   $details = maybe_unserialize( $meta[SNT_META_DETAILS][0] );
 
   $status = $details['status'] ?? 'EventScheduled';
@@ -29,6 +44,7 @@ function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
   $online_location_url = $details['online_location_url'] ?? '';
   $performers = $details['performers'] ?? '';
 
+  // Create the Event schema for the single post
   $schema = [
     "@context"    => "https://schema.org",
     "@type"       => "Event",
@@ -83,7 +99,7 @@ function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
     $schema['performer'] = '';
   }
   
-  // Otherwise format all the event details
+  // Construct the HTML for all the event details used in a single post
   $meta_out = '<p class="event-details-title">Event details</p>';
   $meta_out .= $date_string 
     ? sprintf( "<p class='event-details-date'>%s</p>\n",
@@ -115,13 +131,15 @@ function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
 
 
   /**
-   * The block's meta values can not be used in its `save` function,
-   * whereas, the block's inner-blocks are included. This means that
-   * the meta values need to be added back into the HTML from 
-   * the `save` function.
+   * The block's meta values (dates and times etc., but not the inner-blocks)
+   * can not be used in its `save` function, whereas, the block's inner-blocks (p, h or list) 
+   * are included. 
    * 
-   * $meta_out is placed into the div wrapper added by the inner-block
-   * by the `save` function.
+   * This means that the meta values need to be added back into the HTML stored in the post by 
+   * the block's `save` function.
+   * 
+   * $meta_out is placed into the div wrapper added around the inner-block
+   * by the block's `save` function.
    */ 
   $re = '@(<div[\w\W\r\t\n]*>)@mU';
   $subst = "$1\n$meta_out";

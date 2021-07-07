@@ -95,19 +95,25 @@ function snt_events_enqueue_editor_block_assets() {
 
 
 /**
- * Add inline script with PHP data. Can't be added before snt-events-script is registered.
- * Therefore, is must be done after the init hook.
+ * Add inline script with PHP data: the post type, and the events category ID
+ * from the options page.
+ * 
+ * Can't be added before snt-events-script is registered.
+ * Therefore, this must be done after the init hook.
+ * 
+ * Enqueued when snt-events-script is registered (see above), which is only on admin pages.
  */
 add_action( 'enqueue_block_editor_assets', 'snt_events_localize_editor_block_script' );
 
 function snt_events_localize_editor_block_script() {
   // Allow the script to use PHP derived data
-  $script_string = 'var from_php_object = { "events_cat": "' 
+  $script_string = 'var from_php_object = { "events_cat_ID": "' 
     . SNT_OPTION_EVENT_CAT_ID . 
     '", "post_type": "' 
     . get_post_type() .
      '" }'; 
 
+  // Params - registered script handle, data to add, add before/after script file
   wp_add_inline_script( 'snt-events-script', 
     $script_string,
     'before' 
@@ -119,6 +125,19 @@ function snt_events_localize_editor_block_script() {
  * If a post is in the events category, 
  * prepend 'Events:' to the title. 
  */
+
+add_filter( 'the_title', 'snt_filter_single_titles', 10, 2 );
+
+function snt_filter_single_titles( $title, $id ) {
+  if ( !is_admin() && in_category( SNT_OPTION_EVENT_CAT_ID, $id ) ) {
+    $title = "<span class='single-title-prefix'>Event:</span> {$title}";
+  }
+
+  return $title;
+}
+
+// OLD method
+
 /* add_filter( 'the_posts', 'snt_filter_single_titles', 10, 2 );
 
 function snt_filter_single_titles( $posts, $query ) {
@@ -134,13 +153,3 @@ function snt_filter_single_titles( $posts, $query ) {
 
   return $posts;
 } */
-
-add_filter( 'the_title', 'snt_filter_single_titles', 10, 2 );
-
-function snt_filter_single_titles( $title, $id ) {
-  if ( in_category( SNT_OPTION_EVENT_CAT_ID, $id ) ) {
-    $title = "<span class='single-title-prefix'>Event:</span> {$title}";
-  }
-
-  return $title;
-}

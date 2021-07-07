@@ -1,3 +1,14 @@
+/**
+ * These functions are used by the onChange attributes of
+ * the fields in get-controls.js
+ *
+ * ***  NOTE: The `meta` object, created in use-meta.js and
+ *      passed via edit.js and get-controls, contains all the
+ *      metadata for the post - not just the events metadata - and
+ *      must be used to spread the existing meta into setMeta().
+ *      If this is not done, metadata will be lost.
+ */
+
 import { eventDates, eventTimes } from "./date-time-strings";
 import {
   SNT_META_START,
@@ -12,26 +23,28 @@ import {
 export { onDateChange, onChangeDetails, toggleIgnoreTime, clearDates };
 
 /**
- * Calculate the deFactoFinish newDate string.
+ * Calculate the deFactoFinish, 23:59:59 the date passed.
  *
- * @param   {string} newDate   The newDate sent from the newDate picker as yyyy-mm-ddThh:mm:ss
+ * @param   {string}  newDate   The newDate sent from the newDate picker as
+ *                              yyyy-mm-ddThh:mm:ss
  *
- * @returns {string}        The deFactoFinish newDate in the format yyyy-mm-ddT23:59:59
+ * @returns {string}  The deFactoFinish newDate in the format yyyy-mm-ddT23:59:59
  */
 function calcDeFactoFinish(newDate) {
   return newDate ? newDate.slice(0, -8).concat("23:59:59") : "";
 }
 
 /**
- * Sets the attributes: start, finish, deFactoFinish, dateString,
- * timeString, dateStringSave and timeStringSave.
+ * Sets the date and time related meta for changes
+ * in both start and finish date pickers.
  *
  * @see eventTimes in newDate-time-strings.js
  * @see eventDates in newDate-time-strings.js
  *
- * @param {string} newDate    The newDate string sent from the newDate picker
- *                         as yyyy-mm-ddThh:mm:ss.
- * @param {string} picker  The name of the newDate picker: `start` or `finish`.
+ * @param {string}  newDate The newDate string sent from the newDate picker
+ *                          as yyyy-mm-ddThh:mm:ss.
+ * @param {string}  picker  The name of the newDate picker: `start` or `finish`.
+ * @param {object}  metaData  The current metadata and metaSet function.
  */
 
 function onDateChange(newDate, picker, metaData) {
@@ -63,7 +76,12 @@ function onDateChange(newDate, picker, metaData) {
 }
 
 /**
- * Sets event details.
+ * Sets non-date/time related text meta when text fields change.
+ *
+ * @param {string}  newValue  The updated value of the field.
+ * @param {string}  fieldName The name of the field that has updated.
+ * @param {object}  metaData  Desructured object with the current
+ *                            metadata and the metaSet function.
  */
 function onChangeDetails(newValue, fieldName, { meta, setMeta }) {
   const newDetailsObj = Object.assign({}, meta[SNT_META_DETAILS], {
@@ -74,7 +92,10 @@ function onChangeDetails(newValue, fieldName, { meta, setMeta }) {
 }
 
 /**
- * Sets the attributes: ignoreTime.
+ * Sets the ignoreTime meta value.
+ *
+ * @param {objects} metaData  destructured object with current
+ *                            metadata and the metaSet function.
  */
 function toggleIgnoreTime({ start, finish, ignoreTime, meta, setMeta }) {
   const timeString = eventTimes({ start, finish });
@@ -88,6 +109,9 @@ function toggleIgnoreTime({ start, finish, ignoreTime, meta, setMeta }) {
 
 /**
  * Clears all the meta attributes.
+ *
+ * @param {object}   The meta data.
+ * @param {function} The WP metaSet function.
  */
 function clearDates(meta, setMeta) {
   setMeta({

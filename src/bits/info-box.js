@@ -1,22 +1,9 @@
 export { InfoBox };
 
 /**
- * Lays out the info box content.
- *
- * @param {object} Destructured props from React competent call.
- */
-function DateInfoBox({ className, children }) {
-  return (
-    <div className={className}>
-      <span className="dashicons dashicons-info-outline"></span> {children}
-    </div>
-  );
-}
-
-/**
  * Lays out the info boxes that provide warnings during date entry.
  *
- * @see DateInfoBox above.
+ * @see DateInfoBox below.
  *
  * @param {object}  Destructured props from React component call.
  *                  includes the start and finish date strings.
@@ -48,3 +35,17 @@ const InfoBox = function ({ start, finish }) {
       </DateInfoBox>
     );
 };
+
+/**
+ * Lays out the info box content.
+ *
+ * @param {object} Destructured props from React component call
+ *                 in get-event-details.js.
+ */
+function DateInfoBox({ className, children }) {
+  return (
+    <div className={className}>
+      <span className="dashicons dashicons-info-outline"></span> {children}
+    </div>
+  );
+}

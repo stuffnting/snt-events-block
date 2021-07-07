@@ -1,3 +1,22 @@
+/**
+ * The block's controls.
+ *  # Block inspector:
+ *    # Event Settings:
+ *      # Status (schema)
+ *      # Location - online or real-world (schema)
+ *      # Online location website name - online only (schema)
+ *      # Online location url- online only (schema)
+ *      # Venue name - real-world only (schema)
+ *      # Venue address - real-world only (schema)
+ *      # Performers (schema)
+ *      # Ignore times (e.g. Exhibition across several days)
+ *      # Clear dates button
+ *    # Start time date picker
+ *    # Finish time date picker
+ *  # Toolbar:
+ *    # Clear dates button
+ */
+
 import {
   onDateChange,
   onChangeDetails,
@@ -7,6 +26,9 @@ import {
 
 const { __ } = wp.i18n;
 const { InspectorControls, BlockControls } = wp.blockEditor;
+/**
+ * *** NOTE: DateTimePicker causes warnings in console.
+ */
 const {
   DateTimePicker,
   PanelBody,
@@ -23,10 +45,9 @@ export { GetInspectorControls, GetBlockControls };
 /**
  * Sets out the Block Inspector controls.
  *
- * @param   {object}          props  Destructured `props` from React component call.
+ * @param   {object}  props   Destructured `props` from React component call in edit.js.
  *
- * @returns {React element}          Containing the Block Inspector controls:
- *                                   two date pickers, a toggle button and a button.
+ * @returns {React element}   Containing the Block Inspector controls.
  */
 function GetInspectorControls({ metaData }) {
   const { start, finish, ignoreTime, details, meta, setMeta } = metaData;
@@ -45,8 +66,11 @@ function GetInspectorControls({ metaData }) {
             href="https://developers.google.com/search/docs/data-types/event"
             target="_blank"
           >
-            Event schema data.
-          </a>
+            Event schema data
+          </a>{" "}
+          (i.e. will be hidden), and will not appear within the events block. To
+          add an address and performers that will be visible inside the block,
+          add paragraph, heading, or list blocks to bottom of the event block.
         </p>
         <h3>Status</h3>
         <SelectControl
@@ -190,7 +214,7 @@ function GetInspectorControls({ metaData }) {
 /**
  * Adds a clear dates button to the block's toolbar.
  *
- * @param   {object} props  Destructured props from the React Component call.
+ * @param   {object} props  Destructured props from the React Component call in edit.js.
  *
  * @returns {React element} Add a button the block toolbar.
  */

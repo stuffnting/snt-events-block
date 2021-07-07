@@ -3,9 +3,13 @@ const { format: formatDate } = wp.date;
 export { eventDates, eventTimes };
 
 /**
- * Create the time string.
+ * Create the time string (times only, no dates) - a nice readable string for rendering.
  *
- * @param {object} Destructured. Contain the start and finish date strings.
+ * Used in set-attribute-function.js
+ *
+ * @param {object} An object containing the start and finish times (destructured).
+ *                 The values are stored in the format from the date picker
+ *                 yyyy-mm-ddThh:mm:ss.
  */
 function eventTimes({ start, finish }) {
   if (!start) {
@@ -21,9 +25,11 @@ function eventTimes({ start, finish }) {
 }
 
 /**
- * Create the date string.
+ * Create the date string (dates only, no times).
  *
- * @param {object} Destructured. Contain the start and finish date strings.
+ * @param {object} An object containing the start and finish times (destructured).
+ *                 The values are stored in the format from the date picker
+ *                 yyyy-mm-ddThh:mm:ss.
  */
 const eventDates = ({ start, finish }) => {
   if (!start) {

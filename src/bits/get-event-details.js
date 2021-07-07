@@ -4,10 +4,11 @@ import { SNT_ALLOWED_BLOCKS } from "./constants";
 const { InnerBlocks } = wp.blockEditor;
 
 /**
+ * Puts together the event details when the block is displayed in the editor.
+ *
+ * @see InfoBox in info-box.js
  *
  * @param {object} props  Destructured props from the React component call.
- *                        The props passed contain the props passed to SNTEvents,
- *                        the class component used as the block's edit function.
  */
 export function GetEventDetails({
   metaData: { start, finish, ignoreTime, dateString, timeString },

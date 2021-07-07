@@ -9,25 +9,41 @@ import {
 
 const { select, dispatch } = wp.data;
 
+/**
+ * Callback function for useEffect. Runs when the block mounts and unmounts.
+ * It adds and removes the events category, and resets the metadata when the
+ * block is deleted.
+ *
+ * @returns {function}  Called on re-render and unmount (block deletion). It removes
+ *                      the events cat and clears the metadata.
+ */
 export function useEffectMetaCatCallback() {
-  const eventCat = parseInt(from_php_object.events_cat);
-  const cats = select("core/editor").getEditedPostAttribute("categories") || [];
-  const newCats = cats.filter((el) => el != 1).concat([eventCat]);
+  // from_php_object from inline script added by wp_add_inline_script() in plugin.php
+  const eventCatID = parseInt(from_php_object.events_cat_ID);
+
+  const catIDs =
+    select("core/editor").getEditedPostAttribute("categories") || [];
+  // Cat ID 1 is WP default "uncategorised"
+  const newCatIDs = catIDs.filter((el) => el != 1).concat([eventCatID]);
 
   dispatch("core/editor").editPost({
-    categories: newCats,
+    categories: newCatIDs,
   });
 
   return () => {
-    const eventCat = parseInt(from_php_object.events_cat);
-    const cats =
-      select("core/editor").getEditedPostAttribute("categories") || [];
-    const newCats = cats.filter((el) => el != eventCat);
+    // from_php_object from inline script added by wp_add_inline_script() in plugin.php
+    const eventCatID = parseInt(from_php_object.events_cat_ID);
 
+    const catIDs =
+      select("core/editor").getEditedPostAttribute("categories") || [];
+    const newCatIDs = catIDs.filter((el) => el != eventCatID);
+
+    // Cat ID 1 is WP default "uncategorised"
     dispatch("core/editor").editPost({
-      categories: newCats.length > 0 ? newCats : [1],
+      categories: newCatIDs.length > 0 ? newCatIDs : [1],
     });
 
+    // Sent sent empty meta values to the store.
     dispatch("core/editor").editPost({
       meta: {
         [SNT_META_START]: "",

@@ -1,16 +1,14 @@
-/**
- * This save function uses the attributes that are sync with the
- * meta attributes, but are saved as normal attributes.
- *
- *  Trying to use the meta values in the `save` function
- * did not work, and caused unpredictable block errors.
- */
-
 const { InnerBlocks } = wp.blockEditor;
 const { useBlockProps } = wp.blockEditor;
 
 export { save };
 
+/**
+ * The save function for the events block
+ *
+ * @returns function  Deals only with the inner-blocks,
+ *                    block save functions can not use meta values.
+ */
 const save = () => {
   const blockProps = useBlockProps.save();
 
