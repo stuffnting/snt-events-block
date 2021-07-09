@@ -1,7 +1,7 @@
 <?php
 /**
   * Plugin Name: snt-events
-  * Plugin URI: S simple plugin that handles events with Gutenberg blocks.
+  * Plugin URI: Simple plugin that handles events with Gutenberg blocks.
   * Author: Grove
   * Author URI: 
   */
@@ -55,6 +55,10 @@ require_once( 'php/event-diary-page.php' );
  */
 require_once( 'php/event-archive-page.php' );
 
+/**
+ * Alter the events titles and excerpts.
+ */
+require_once( 'php/event-titles-and-excerpts.php' );
 
 /**
  * Enqueue the JS file and localize it.
@@ -119,37 +123,3 @@ function snt_events_localize_editor_block_script() {
     'before' 
   );
 }
-
-/**
- * Filter the post titles for the main query. 
- * If a post is in the events category, 
- * prepend 'Events:' to the title. 
- */
-
-add_filter( 'the_title', 'snt_filter_single_titles', 10, 2 );
-
-function snt_filter_single_titles( $title, $id ) {
-  if ( !is_admin() && in_category( SNT_OPTION_EVENT_CAT_ID, $id ) ) {
-    $title = "<span class='single-title-prefix'>Event:</span> {$title}";
-  }
-
-  return $title;
-}
-
-// OLD method
-
-/* add_filter( 'the_posts', 'snt_filter_single_titles', 10, 2 );
-
-function snt_filter_single_titles( $posts, $query ) {
-  if ( !is_admin() && $query->is_main_query()  ) {
-    foreach ( $posts as $post ) {
-
-      if ( in_category( SNT_OPTION_EVENT_CAT_ID, $post->ID ) ) {
-        $post->post_title = "<span class='single-title-prefix'>Event:</span> {$post->post_title}";
-      }
-
-    }
-  }
-
-  return $posts;
-} */

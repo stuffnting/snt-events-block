@@ -27,25 +27,31 @@ function snt_alter_query( $query ) {
 /**
  * Filter the archive page title prefix.
  */
-add_filter('get_the_archive_title_prefix', 'snt_filter_archive_title_prefix');
+/* add_filter('get_the_archive_title_prefix', 'snt_filter_archive_title_prefix');
 
 function snt_filter_archive_title_prefix( $prefix ) {
   if ( is_category( SNT_OPTION_EVENT_CAT_ID ) ) {
     return "";
   }
   return $prefix;
-}
+} */
 
 
 /**
  * Alter the archive page title.
+ * 
+ * @param {string} $title   The default category archive page 
+ *                          passed by WP to the filter CB function.
+ * 
+ * @return {string} $title The altered events category archive page title, 
+ *                          or the unaltered title for all other archive pages.
  */
 add_filter( 'get_the_archive_title', 'snt_filter_archive_title' );
 
 function snt_filter_archive_title( $title ) {
-    if ( is_category( SNT_OPTION_EVENT_CAT_ID ) ) {
-      return "Events Archive";
-    }
-    
-    return $title;
+  if ( is_category( SNT_OPTION_EVENT_CAT_ID ) ) {
+    return "Events Archive";
+  }
+  
+  return $title;
 }

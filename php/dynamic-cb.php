@@ -16,6 +16,10 @@ function snt_events_dynamic_cb( $attributes, $inner_blocks ) {
   //Get a flattened array
   $meta = get_post_meta( get_the_ID() );
 
+  if ( !isset( $meta ) || empty( $meta ) ) {
+    return;
+  }
+
   // Constants defined in ../plugin.php
   $date_string = $meta[SNT_META_DATES][0] ?? '';
   $time_string = $meta[SNT_META_TIMES][0] ?? '';
