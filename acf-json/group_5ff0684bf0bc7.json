@@ -1,0 +1,84 @@
+{
+  "key": "group_5ff0684bf0bc7",
+  "title": "Extra Site Settings",
+  "fields": [
+    {
+      "key": "field_5ff32f90ca85b",
+      "label": "Blog category ID",
+      "name": "blog_category_id",
+      "type": "number",
+      "instructions": "Enter the ID number of the blog category.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "10",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "min": "",
+      "max": "",
+      "step": ""
+    },
+    {
+      "key": "field_5ff0685df9e4f",
+      "label": "Event category ID",
+      "name": "event_category_id",
+      "type": "number",
+      "instructions": "Enter the ID number of the event category.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "10",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "min": "",
+      "max": "",
+      "step": ""
+    },
+    {
+      "key": "field_5ff1d6e54c7cf",
+      "label": "Event Diary Slug",
+      "name": "event_diary_slug",
+      "type": "text",
+      "instructions": "Enter the URL slug for the event diary page without leading or trailing slashes; e.g. events/event-diary.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "acf-options-extra-site-settings"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

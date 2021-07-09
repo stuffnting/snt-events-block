@@ -12,6 +12,8 @@ if( ! defined( 'ABSPATH') ) {
 /**
  * Define some constants
  */
+define('SNT_EVENTS_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+
 define('SNT_META_START', '_snt_event_start');
 define('SNT_META_FINISH', '_snt_event_finish');
 define('SNT_META_DF_FINISH', '_snt_event_de_facto_finish');
