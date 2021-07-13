@@ -22,7 +22,8 @@
   margin: 0;
 }
 
-.snt-events-event-settings select {
+.snt-events-event-settings select,
+.snt-events-event-schema select {
   line-height: 20px !important;
 }
 

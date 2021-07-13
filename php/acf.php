@@ -36,7 +36,7 @@ function snt_acf_json_load_point( $paths ) {
 
     // append path
     $paths[] = SNT_EVENTS_PLUGIN_PATH . 'acf-json';
-snt_dump(SNT_EVENTS_PLUGIN_PATH . 'acf-json');
+
     // return
     return $paths;
     

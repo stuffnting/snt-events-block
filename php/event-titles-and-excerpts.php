@@ -40,7 +40,7 @@ function snt_filter_archive_excerpt($excerpt) {
 add_filter( 'the_title', 'snt_filter_single_titles', 10, 2 );
 
 function snt_filter_single_titles( $title, $id ) {
-    snt_dump($id);
+
   if ( !is_admin() && in_category( SNT_OPTION_EVENT_CAT_ID, $id ) ) {
     $title = "<span class='single-title-prefix'>Event:</span> {$title}";
   }

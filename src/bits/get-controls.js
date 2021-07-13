@@ -1,7 +1,10 @@
 /**
  * The block's controls.
  *  # Block inspector:
- *    # Event Settings:
+ *    # Event Settings
+ *      # Ignore times (e.g. Exhibition across several days)
+ *      # Clear dates button
+ *    # Event Schema:
  *      # Status (schema)
  *      # Location - online or real-world (schema)
  *      # Online location website name - online only (schema)
@@ -9,8 +12,6 @@
  *      # Venue name - real-world only (schema)
  *      # Venue address - real-world only (schema)
  *      # Performers (schema)
- *      # Ignore times (e.g. Exhibition across several days)
- *      # Clear dates button
  *    # Start time date picker
  *    # Finish time date picker
  *  # Toolbar:
@@ -60,6 +61,40 @@ function GetInspectorControls({ metaData }) {
         icon="admin-settings"
         className="snt-events-event-settings"
       >
+        <h3>Ignore Event Times</h3>
+        <p>
+          {__(
+            "Use this switch to ignore start and finish times, so that your events will have dates only. Daily opening times can be added in the event block, under the dates.",
+            "sntEvents"
+          )}
+        </p>
+        <ToggleControl
+          label={__("Ignore event times?", "sntEvents")}
+          help={
+            ignoreTime
+              ? __("Ignore times, event has dates only.", "sntEvents")
+              : __("Event has dates and times.", "sntEvents")
+          }
+          checked={ignoreTime}
+          onChange={() => toggleIgnoreTime(metaData)}
+        />
+        <h3>Clear Dates and Times</h3>
+        <Button
+          isSecondary
+          label={__("Clear dates and times", "sntEvents")}
+          icon={__("dismiss", "sntEvents")}
+          className="snt-clear-meta-button"
+          onClick={() => clearDates(meta, setMeta)}
+        >
+          {__(" Clear dates", "sntEvents")}
+        </Button>
+      </PanelBody>
+      <PanelBody
+        title={__("Events Schema", "sntEvents")}
+        initialOpen={false}
+        icon="editor-code"
+        className="snt-events-event-schema"
+      >
         <p>
           These settings are used to set up the{" "}
           <a
@@ -69,8 +104,9 @@ function GetInspectorControls({ metaData }) {
             Event schema data
           </a>{" "}
           (i.e. will be hidden), and will not appear within the events block. To
-          add an address and performers that will be visible inside the block,
-          add paragraph, heading, or list blocks to bottom of the event block.
+          add an address, performers and other details that will be visible
+          inside the event block, add paragraph, heading, or list blocks to
+          bottom of the event block.
         </p>
         <h3>Status</h3>
         <SelectControl
@@ -157,36 +193,9 @@ function GetInspectorControls({ metaData }) {
           placeholder={__("Comma separated list...", "sntEvents")}
           onChange={(newVal) => onChangeDetails(newVal, "performers", metaData)}
         />
-        <h3>Ignore Event Times</h3>
-        <p>
-          {__(
-            "Use this switch to ignore start and finish times, so that your events will have dates only. Daily opening times can be added in the event block, under the dates.",
-            "sntEvents"
-          )}
-        </p>
-        <ToggleControl
-          label={__("Ignore event times?", "sntEvents")}
-          help={
-            ignoreTime
-              ? __("Ignore times, event has dates only.", "sntEvents")
-              : __("Event has dates and times.", "sntEvents")
-          }
-          checked={ignoreTime}
-          onChange={() => toggleIgnoreTime(metaData)}
-        />
-        <h3>Clear Dates and Times</h3>
-        <Button
-          isSecondary
-          label={__("Clear dates and times", "sntEvents")}
-          icon={__("dismiss", "sntEvents")}
-          className="snt-clear-meta-button"
-          onClick={() => clearDates(meta, setMeta)}
-        >
-          {__(" Clear dates", "sntEvents")}
-        </Button>
       </PanelBody>
       <PanelBody
-        title={__("Event Start", "sntEvents")}
+        title={__("Start Date/Time", "sntEvents")}
         initialOpen={false}
         icon="calendar-alt"
       >
@@ -197,7 +206,7 @@ function GetInspectorControls({ metaData }) {
         />
       </PanelBody>
       <PanelBody
-        title={__("Event Finish", "sntEvents")}
+        title={__("Finish Date/Time", "sntEvents")}
         initialOpen={false}
         icon="calendar-alt"
       >

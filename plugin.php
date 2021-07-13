@@ -45,7 +45,7 @@ require_once( 'php/dynamic-cb.php' );
 /**
  * Adds a ACF options page
  */
-require_once( 'php/acf-options-page.php' );
+require_once( 'php/acf.php' );
 
 /**
  * Add a dummy page for the events diary (pending events)
@@ -66,8 +66,9 @@ require_once( 'php/event-titles-and-excerpts.php' );
  * Enqueue the JS file and localize it.
  */
 add_action( 'init', 'snt_events_enqueue_editor_block_assets' );
-
+snt_dump("PANTS");
 function snt_events_enqueue_editor_block_assets() {
+
   wp_register_script(
     'snt-events-script',
     plugins_url( 'js/index.js', __FILE__ ),
