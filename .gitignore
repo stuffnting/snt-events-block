@@ -7,11 +7,3 @@ log/*.log[0.9]
 node_modules
 .tmp
 .sass-cache
-
-# Build folder
-js/
-
-# previous version
-src-OLD/
-php-OLD/
-src/XXXindex.js
