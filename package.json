@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "wp-scripts build",
+    "build:custom": "wp-scripts build src/index.js --output-path=build/js/",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format:js": "wp-scripts format-js",
@@ -21,6 +22,8 @@
   "author": "Grover Stones",
   "license": "ISC",
   "devDependencies": {
-    "@wordpress/scripts": "^16.1.4"
+    "@wordpress/element": "^3.1.1",
+    "@wordpress/scripts": "^16.1.4",
+    "copy-webpack-plugin": "^6.4.1"
   }
 }
