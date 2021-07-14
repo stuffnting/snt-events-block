@@ -1,6 +1,5 @@
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
-const path = require("path");
-
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
@@ -15,6 +14,11 @@ module.exports = {
         { from: "README.md", to: "../" },
         { from: "README.md", to: "../" },
       ],
+    }),
+    new CleanWebpackPlugin({
+      dry: false,
+      cleanOnceBeforeBuildPatterns: ["../**/*"],
+      dangerouslyAllowCleanPatternsOutsideProject: true,
     }),
   ],
 };
