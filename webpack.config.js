@@ -29,10 +29,10 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "php/*.php", to: "../" },
-        { from: "plugin.php", to: "../" },
-        { from: "css/*.css", to: "../" },
-        { from: "acf-json/*.*", to: "../" },
+        { context: "src", from: "php/*.php", to: "../" },
+        { context: "src", from: "plugin.php", to: "../" },
+        { context: "src", from: "css/*.css", to: "../" },
+        { context: "src", from: "acf-json/*.*", to: "../" },
       ],
     }),
   ],
