@@ -1,2 +1,3 @@
-# gutenberg-blocks
-Examples of WordPress Gutenberg block code
+# SNT EVENTS
+
+A simle WordPress plugin that handles events using Gutenberg blocks.

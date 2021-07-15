@@ -1,10 +1,18 @@
 <?php
 /**
-  * Plugin Name: snt-events
-  * Plugin URI: Simple plugin that handles events with Gutenberg blocks.
-  * Author: Grove
-  * Author URI: 
-  */
+ * Plugin Name: SNT Events
+ * Plugin URI: https://github.com/stuffnting/snt-events-block
+ * Description: Simple plugin that handles events with Gutenberg blocks.
+ * Author: Grover Stones
+ * Author URI: https://stuffnting.com
+ * version: 1.0.0
+ * Requires at least: 5.4
+ * Requires PHP: 7.2
+ * License: GPL v3 or later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain: sntEvents
+ */
+
 if( ! defined( 'ABSPATH') ) {
     exit;
 }
@@ -12,6 +20,10 @@ if( ! defined( 'ABSPATH') ) {
 /**
  * Define some constants
  */
+
+// Defining a constant has better performance than using get_plugin_data()
+define('SNT_EVENTS_VERSION', '1.0.0');
+
 define('SNT_EVENTS_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 
 define('SNT_META_START', '_snt_event_start');
@@ -73,7 +85,7 @@ function snt_events_enqueue_editor_block_assets() {
     'snt-events-script',
     plugins_url( 'js/index.js', __FILE__ ),
     array( 'wp-edit-post', 'wp-dom-ready' ),
-    filemtime( plugin_dir_path(__FILE__) . 'js/index.js' ), // *** Dev only
+    SNT_EVENTS_VERSION,
     true
   );
 
@@ -89,7 +101,7 @@ function snt_events_enqueue_editor_block_assets() {
     'snt-events-editor-style',
     plugins_url( 'css/editor-styles.css', __FILE__ ),
     array('wp-edit-blocks'),
-    filemtime( plugin_dir_path(__FILE__) . 'css/editor-styles.css' ) // *** Dev only
+    SNT_EVENTS_VERSION
   );
 
   register_block_type( 'snt/events-block', array(
