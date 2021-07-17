@@ -78,7 +78,7 @@ require_once( 'php/event-titles-and-excerpts.php' );
  * Enqueue the JS file and localize it.
  */
 add_action( 'init', 'snt_events_enqueue_editor_block_assets' );
-snt_dump("PANTS");
+
 function snt_events_enqueue_editor_block_assets() {
 
   wp_register_script(
