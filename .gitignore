@@ -7,3 +7,5 @@ log/*.log[0.9]
 node_modules
 .tmp
 .sass-cache
+
+start/
