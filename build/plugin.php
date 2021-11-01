@@ -85,7 +85,7 @@ function snt_events_enqueue_editor_block_assets() {
     'snt-events-script',
     plugins_url( 'js/index.js', __FILE__ ),
     array( 'wp-edit-post', 'wp-dom-ready' ),
-    SNT_EVENTS_VERSION,
+    filemtime( plugin_dir_path(__FILE__) . 'js/index.js' ), // *** Dev only
     true
   );
 
@@ -100,8 +100,9 @@ function snt_events_enqueue_editor_block_assets() {
   wp_register_style(
     'snt-events-editor-style',
     plugins_url( 'css/editor-styles.css', __FILE__ ),
-    array('wp-edit-blocks'),
-    SNT_EVENTS_VERSION
+    array(),
+    filemtime( plugin_dir_path(__FILE__) . 'css/editor-styles.css' ), // *** Dev only
+    true
   );
 
   register_block_type( 'snt/events-block', array(
@@ -137,4 +138,28 @@ function snt_events_localize_editor_block_script() {
     $script_string,
     'before' 
   );
+}
+
+
+
+//add_filter( 'allowed_block_types_all', 'myprefix_filter_blocks', 10, 2 );
+
+function myprefix_filter_blocks( $allowed_block_types, $block_editor_context ) {
+  
+  $black_list = [ 'core/verse', 'core/pullquote', 'core/quote' ];
+
+  $all_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+  if ( !empty( $all_blocks  && isset ( $black_list ) ) ) {
+    $all_block_names = [];
+    foreach ( $all_blocks as $block ) {
+      $all_block_names[] = $block->name;
+    }
+  }
+
+  if ( !isset( $block_editor_context->post->post_type ) ) {
+    return array_values( array_diff( $all_block_names, $black_list ) );
+  }
+
+  return  $allowed_block_types;
 }

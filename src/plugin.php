@@ -5,7 +5,7 @@
  * Description: Simple plugin that handles events with Gutenberg blocks.
  * Author: Grover Stones
  * Author URI: https://stuffnting.com
- * version: 1.0.0
+ * version: 1.0.1
  * Requires at least: 5.4
  * Requires PHP: 7.2
  * License: GPL v3 or later
@@ -22,7 +22,7 @@ if( ! defined( 'ABSPATH') ) {
  */
 
 // Defining a constant has better performance than using get_plugin_data()
-define('SNT_EVENTS_VERSION', '1.0.0');
+define('SNT_EVENTS_VERSION', '1.0.1');
 
 define('SNT_EVENTS_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 
@@ -100,8 +100,9 @@ function snt_events_enqueue_editor_block_assets() {
   wp_register_style(
     'snt-events-editor-style',
     plugins_url( 'css/editor-styles.css', __FILE__ ),
-    array('wp-edit-blocks'),
-    filemtime( plugin_dir_path(__FILE__) . 'css/editor-styles.css' ) // *** Dev only
+    array(),
+    filemtime( plugin_dir_path(__FILE__) . 'css/editor-styles.css' ), // *** Dev only
+    true
   );
 
   register_block_type( 'snt/events-block', array(
@@ -137,4 +138,28 @@ function snt_events_localize_editor_block_script() {
     $script_string,
     'before' 
   );
+}
+
+
+
+//add_filter( 'allowed_block_types_all', 'myprefix_filter_blocks', 10, 2 );
+
+function myprefix_filter_blocks( $allowed_block_types, $block_editor_context ) {
+  
+  $black_list = [ 'core/verse', 'core/pullquote', 'core/quote' ];
+
+  $all_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+  if ( !empty( $all_blocks  && isset ( $black_list ) ) ) {
+    $all_block_names = [];
+    foreach ( $all_blocks as $block ) {
+      $all_block_names[] = $block->name;
+    }
+  }
+
+  if ( !isset( $block_editor_context->post->post_type ) ) {
+    return array_values( array_diff( $all_block_names, $black_list ) );
+  }
+
+  return  $allowed_block_types;
 }

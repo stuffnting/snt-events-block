@@ -8,4 +8,5 @@ node_modules
 .tmp
 .sass-cache
 
+# Don't include the start folder, but build and src are included
 start/

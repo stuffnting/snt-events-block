@@ -4,6 +4,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   ...defaultConfig,
+  externals: {
+    lodash: "lodash",
+  },
   plugins: [
     new CopyPlugin({
       patterns: [
@@ -11,7 +14,6 @@ module.exports = {
         { context: "src", from: "plugin.php", to: "../" },
         { context: "src", from: "css/*.css", to: "../" },
         { context: "src", from: "acf-json/*.*", to: "../" },
-        { from: "README.md", to: "../" },
         { from: "README.md", to: "../" },
       ],
     }),
